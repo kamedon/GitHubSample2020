@@ -2,6 +2,7 @@ package jp.classmethod.githubapp.ui.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import com.wada811.databinding.dataBinding
 import jp.classmethod.githubapp.R
 import jp.classmethod.githubapp.databinding.ActivityMainBinding
@@ -15,9 +16,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding.viewModel = viewModel
+        binding.lifecycleOwner = this
+
         binding.submitBtn.setOnClickListener {
             viewModel.fetch()
         }
+
+
     }
 }
 
