@@ -2,6 +2,7 @@ package jp.classmethod.githubapp.ui.main
 
 import androidx.lifecycle.*
 import jp.classmethod.githubapp.common.LoadState
+import jp.classmethod.githubapp.util.extenstion.toLoadingState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
@@ -49,11 +50,3 @@ class MainViewModel(private val useCase: IGitHubUseCase) : ViewModel() {
 
 }
 
-fun <T> Flow<T>.toLoadingState(): Flow<LoadState<T>> =
-    map<T, LoadState<T>> {
-        LoadState.Loaded(it)
-    }.onStart {
-        emit(LoadState.Loading)
-    }.catch {
-        emit(LoadState.Error(it))
-    }
