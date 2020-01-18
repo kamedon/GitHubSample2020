@@ -5,3 +5,10 @@ class UserPresentModel(val id: String, val reposUrl: String) {
         val NONE = UserPresentModel("", "")
     }
 }
+
+class FeedPresentModel(val timelineUrl: String) {
+    companion object {
+        val NONE = FeedPresentModel("")
+    }
+
+}

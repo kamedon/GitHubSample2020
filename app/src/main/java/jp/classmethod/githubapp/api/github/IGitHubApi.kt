@@ -9,8 +9,9 @@ interface IGitHubApi {
     @GET("users/{name}")
     suspend fun user(@Path("name") name: String): UserResponseBody?
 
-    @POST("hoge")
-    suspend fun hoge(@Body data: HogeRequestBody): HogeResponseBody
+    @GET("feeds")
+    suspend fun feed(): FeedResponseBody?
+
 
 }
 

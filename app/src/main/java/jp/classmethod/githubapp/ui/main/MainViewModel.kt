@@ -13,15 +13,26 @@ import kotlinx.coroutines.withContext
 class MainViewModel(private val useCase: IGitHubUseCase) : ViewModel() {
 
     val nameEdit = MutableLiveData<String>()
-
-
     val user: MutableLiveData<LoadState<UserPresentModel>> = MutableLiveData()
+
+    val feed: LiveData<LoadState<FeedPresentModel>> = liveData {
+        emitSource(useCase.feed().toLoadingState().asLiveData())
+    }
 
     fun fetch() {
         viewModelScope.launch(Dispatchers.Main) {
-            useCase.user(nameEdit.value ?: "").flowOn(Dispatchers.IO).toLoadingState().collect {
+            useCase.user(nameEdit.value ?: "").toLoadingState().collect {
                 user.value = it
             }
+        }
+    }
+
+    val feedUrl = feed.map {
+        when (it) {
+            is LoadState.Loaded -> {
+                it.value.timelineUrl
+            }
+            else -> ""
         }
     }
 

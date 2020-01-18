@@ -6,6 +6,8 @@ import kotlinx.coroutines.flow.flow
 
 interface IGitHubUseCase {
     suspend fun user(name: String): Flow<UserPresentModel>
+    suspend fun feed(): Flow<FeedPresentModel>
+
 }
 
 class GitHubUseCase(private val repository: IGitHubRepository) : IGitHubUseCase {
@@ -19,6 +21,18 @@ class GitHubUseCase(private val repository: IGitHubRepository) : IGitHubUseCase 
                 UserPresentModel(response.id, response.reposUrl)
             } else {
                 UserPresentModel.NONE
+            }
+        )
+    }
+
+    override suspend fun feed(): Flow<FeedPresentModel> = flow {
+        val response = repository.feed()
+
+        emit(
+            if (response != null) {
+                FeedPresentModel(response.timelineUrl)
+            } else {
+                FeedPresentModel.NONE
             }
         )
     }

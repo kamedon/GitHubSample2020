@@ -6,4 +6,5 @@ import androidx.annotation.Keep
 data class UserResponseBody(val id: String, val reposUrl: String, val createdAt: String)
 
 @Keep
-data class HogeResponseBody(val foo: String)
+data class FeedResponseBody(val timelineUrl: String)
+
